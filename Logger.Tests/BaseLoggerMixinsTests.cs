@@ -52,6 +52,11 @@ public class TestLogger : ILogger
     public List<(LogLevel LogLevel, string Message)> LoggedMessages { get; } = new List<(LogLevel, string)>();
     public int MaxMessageLength { get; set; }
 
+    public static ILogger CreateLogger()
+    {
+        throw new NotImplementedException();
+    }
+
     public void Log(LogLevel logLevel, string message)
     {
         LoggedMessages.Add((logLevel, message));
