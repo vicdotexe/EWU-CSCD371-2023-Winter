@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29326.143
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33103.201
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Logger\Logger.csproj", "{66374C57-E11E-48DD-8A2D-1760D181FBFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logger", "Logger\Logger.csproj", "{66374C57-E11E-48DD-8A2D-1760D181FBFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger.Tests", "Logger.Tests\Logger.Tests.csproj", "{E1214826-DAC3-4662-B6C5-C11B77C77FD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logger.Tests", "Logger.Tests\Logger.Tests.csproj", "{E1214826-DAC3-4662-B6C5-C11B77C77FD9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vehicles", "Vehicles\Vehicles.csproj", "{61297AE8-2435-4E76-AC8E-270368475CF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,18 @@ Global
 		{E1214826-DAC3-4662-B6C5-C11B77C77FD9}.Release|x64.Build.0 = Release|Any CPU
 		{E1214826-DAC3-4662-B6C5-C11B77C77FD9}.Release|x86.ActiveCfg = Release|Any CPU
 		{E1214826-DAC3-4662-B6C5-C11B77C77FD9}.Release|x86.Build.0 = Release|Any CPU
+		{61297AE8-2435-4E76-AC8E-270368475CF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61297AE8-2435-4E76-AC8E-270368475CF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61297AE8-2435-4E76-AC8E-270368475CF1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{61297AE8-2435-4E76-AC8E-270368475CF1}.Debug|x64.Build.0 = Debug|Any CPU
+		{61297AE8-2435-4E76-AC8E-270368475CF1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{61297AE8-2435-4E76-AC8E-270368475CF1}.Debug|x86.Build.0 = Debug|Any CPU
+		{61297AE8-2435-4E76-AC8E-270368475CF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61297AE8-2435-4E76-AC8E-270368475CF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61297AE8-2435-4E76-AC8E-270368475CF1}.Release|x64.ActiveCfg = Release|Any CPU
+		{61297AE8-2435-4E76-AC8E-270368475CF1}.Release|x64.Build.0 = Release|Any CPU
+		{61297AE8-2435-4E76-AC8E-270368475CF1}.Release|x86.ActiveCfg = Release|Any CPU
+		{61297AE8-2435-4E76-AC8E-270368475CF1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
