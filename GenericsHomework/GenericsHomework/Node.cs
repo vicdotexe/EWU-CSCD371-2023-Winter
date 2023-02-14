@@ -48,6 +48,13 @@ namespace GenericsHomework
             Append(item);
         }
 
+        // I interpret this to mean clearing all the connections in the entire chain, if it were named 'remove'
+        // then I would disconnect the calling node and mend the loop, since this is not the case, I set the 'next' property
+        // of every connected node to itself so that every node stands alone. On the chance
+        // that there is a reference to one of other the nodes further down the line held in some other
+        // location outside of the chain, this will prevent broken behavior and allow that node to continue being
+        // a functional collection with a single item. This decision was not influenced by garbage collection, because
+        // GC will collect anything not accessible from the root, circular references in the ether will be collected.
         public void Clear()
         {
             if (Next == this)
@@ -85,7 +92,7 @@ namespace GenericsHomework
 
             // get the node to remove
             var toRemove = current.Next;
-            // set the node behind it's next to the removed node's next (bridge the gap that was created)
+            // set the node behind it's next to the removed node's next (bridge the gap that gets created)
             current.Next = toRemove.Next;
             // apply a self-reference to the removed node
             toRemove.Next = toRemove;
