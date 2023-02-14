@@ -93,7 +93,7 @@ namespace GenericsHomework.Tests
         {
             var node0 = new Node<int>(0);
             var node1 = node0.Append(1);
-            var node2 = node1.Append(2);
+            ICollection<int> node2 = node1.Append(2);
             var node3 = node2.Append(3);
             var node4 = node3.Append(4);
             node2.Add(8);

@@ -43,7 +43,7 @@ namespace GenericsHomework
             return false;
         }
 
-        public void Add(T item)
+        void ICollection<T>.Add(T item)
         {
             Append(item);
         }
@@ -64,7 +64,7 @@ namespace GenericsHomework
             next.Clear();
         }
 
-        public bool Contains(T item)
+        bool ICollection<T>.Contains(T item)
         {
             return Exists(item);
         }
