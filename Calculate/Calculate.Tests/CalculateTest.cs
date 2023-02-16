@@ -101,5 +101,6 @@ namespace Calculate.Tests
             calc.Calculate("1 - -2");
             Assert.AreEqual(output, "3");
         }
+
     }
 }

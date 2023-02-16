@@ -5,10 +5,21 @@ namespace Calculate;
 
 public class Calculator
 {
-    public Action<string> WriteLine { get; init; }
-    public Func<string?> ReadLine { get; init; }
+    private readonly Action<string>? _writeLine;
+    public Action<string> WriteLine
+    {
+        get => _writeLine ?? throw new NullReferenceException(nameof(WriteLine)); 
+        init => _writeLine = value ?? throw new ArgumentNullException(nameof(value));
+    }
 
-    public IReadOnlyDictionary<char, Func<double, double, double>> MathematicalOperations =
+    private readonly Func<string?>? _readLine;
+    public Func<string?> ReadLine
+    {
+        get => _readLine ?? throw new NullReferenceException(nameof(ReadLine));
+        init => _readLine = value ?? throw new ArgumentNullException(nameof(value));
+    }
+
+    public IReadOnlyDictionary<char, Func<double, double, double>> MathematicalOperations { get; } =
         new Dictionary<char, Func<double, double, double>>()
         {
             { '+', Add },
@@ -17,12 +28,13 @@ public class Calculator
             { '/', Divide }
         };
 
-    private static readonly Regex _regex = new(@"^[-]?\d+([.]\d+)?(\s[+/*-]\s)[-]?\d+([.]\d+)?$");
+    private static readonly Regex ValidMathExpression = new(@"^[-]?\d+([.]\d+)?(\s[+/*-]\s)[-]?\d+([.]\d+)?$");
 
     public Calculator() : this(Console.WriteLine, Console.ReadLine)
     {
 
     }
+
     public Calculator(Action<string> writeLine, Func<string?> readLine)
     {
         WriteLine = writeLine;
@@ -31,7 +43,7 @@ public class Calculator
 
     public void Calculate(string? expression)
     {
-        if (expression is null || !_regex.IsMatch(expression))
+        if (expression is null || !ValidMathExpression.IsMatch(expression))
         {
             WriteLine.Invoke("Invalid Format");
             return;
