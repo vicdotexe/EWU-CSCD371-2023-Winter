@@ -27,8 +27,7 @@ public class Calculator
             { '*', Multiply },
             { '/', Divide }
         };
-
-    private static readonly Regex ValidMathExpression = new(@"^[-]?\d+([.]\d+)?(\s[+/*-]\s)[-]?\d+([.]\d+)?$");
+    
 
     public Calculator() : this(Console.WriteLine, Console.ReadLine)
     {
@@ -41,38 +40,29 @@ public class Calculator
         ReadLine = readLine;
     }
 
-    public void Calculate(string? expression)
+    public bool TryCalculate(string? expression, out string? result)
     {
-        if (expression is null || !ValidMathExpression.IsMatch(expression))
+        result = null;
+
+        if (expression?.Split(" ") is [string a, [char o], string b])
         {
-            WriteLine.Invoke("Invalid Format");
-            return;
+            if (int.TryParse(a, out int aInt)
+                && int.TryParse(b, out int bInt)
+                && MathematicalOperations.TryGetValue(o, out var func))
+            {
+                result = func(aInt, bInt).ToString();
+                WriteLine(result);
+                return true;
+            }
         }
 
-        var split = expression.Split(" ");
-        var a = double.Parse(split[0]);
-        var b = double.Parse(split[2]);
-        var o = char.Parse(split[1]);
-
-        var result = MathematicalOperations[o].Invoke(a, b);
-        WriteLine.Invoke(result.ToString());
+        WriteLine("Invalid Format");
+        return false;
     }
 
-    public static double Add(double a, double b)
-    {
-        return a + b;
-    }
-    public static double Subtract(double a, double b)
-    {
-        return a - b;
-    }
-    public static double Multiply(double a, double b)
-    {
-        return a * b;
-    }
-    public static double Divide(double a, double b)
-    {
-        return a / b;
-    }
+    public static double Add(double a, double b) => a + b;
+    public static double Subtract(double a, double b) => a - b;
+    public static double Multiply(double a, double b) => a * b;
+    public static double Divide(double a, double b) => a / b;
 
 }
