@@ -9,16 +9,11 @@ namespace Assignment
     public class SampleData : ISampleData
     {
         private List<string> _rows;
-        private Dictionary<string, int> _indices;
 
         public SampleData(string filePath)
         {
             IEnumerable<string> lines = File.ReadLines(filePath);
-
             _rows = lines.Skip(1).ToList();
-
-            int i = 0;
-            _indices = lines.First().Split(",").ToDictionary(key => key, key => i++);
         }
 
         // 1.
