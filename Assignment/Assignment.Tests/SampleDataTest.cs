@@ -9,6 +9,7 @@ namespace Assignment.Tests;
 [TestClass]
 public class SampleDataTest
 {
+
     [TestMethod]
     public void CsvRows_SkipsFirstLine()
     {
@@ -19,12 +20,11 @@ public class SampleDataTest
         Assert.AreEqual<int>(expected, actual);
     }
 
-
     [TestMethod]
     public void GetUniqueSortedListOfStatesGivenCsvRows_IsUniqueStates()
     {
         SampleData data = new("./SpokaneAddresses.csv");
-        var states = data.GetUniqueSortedListOfStatesGivenCsvRows();
+        IEnumerable<string> states = data.GetUniqueSortedListOfStatesGivenCsvRows();
         
         int actual = 1;
         int expected = states.Count();
@@ -35,13 +35,24 @@ public class SampleDataTest
     public void GetUniqueSortedListOfStatesGivenCsvRows_IsUniqueStates_Alternative()
     {
         SampleData data = new("./People.csv");
-        var states = data.GetUniqueSortedListOfStatesGivenCsvRows();
-        var hash = states.ToHashSet();
+        IEnumerable<string> states = data.GetUniqueSortedListOfStatesGivenCsvRows();
+        HashSet<string> hash = states.ToHashSet();
 
         int expected = hash.Count;
         int actual = states.Count();
 
         Assert.AreEqual<int>(expected, actual);
+    }
+
+    [TestMethod]
+    public void GetUniqueSortedListOfStatesGivenCsvRows_IsSorted()
+    {
+        SampleData data = new("./People.csv");
+        IEnumerable<string> states = data.GetUniqueSortedListOfStatesGivenCsvRows();
+
+        IEnumerable<bool> offsetComparisons = states.Zip(states.Skip(1), (current, next) => current.CompareTo(next) <= 0);
+        bool isSorted = offsetComparisons.All(comparison => comparison == true);
+        Assert.IsTrue(isSorted);
     }
 
     [TestMethod]

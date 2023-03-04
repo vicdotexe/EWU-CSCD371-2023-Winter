@@ -41,7 +41,7 @@ namespace Assignment
             if (row.Split(',') is [string id, string first, string last, string email, string street, string city,
                 string state, string zip])
             {
-                Address address = new Address(street, city, state, zip);
+                Address address = new (street, city, state, zip);
                 return new Person(first, last, address, email);
             }
 
