@@ -44,16 +44,15 @@ public class Node<T> : ICollection<T>
         return false;
     }
 
-    public IEnumerable<Node<T>> ChildItems(int maximum)
+    public IEnumerable<T> ChildItems(int maximum)
     {
         int count = 0;
         var current = this;
 
         while (current.Next != this && ++count <= maximum)
         {
-            var next = current.Next;
+            yield return current.Next.Value;
             current = current.Next;
-            yield return next;
         }
     }
 
