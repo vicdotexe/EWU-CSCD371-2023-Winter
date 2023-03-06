@@ -59,10 +59,13 @@ public class SampleDataTest
     public void People_ReturnsValidListOfIPerson()
     {
         SampleData data = new("./People.csv");
-        IEnumerable<string> rows = data.CsvRows;
+        IEnumerable<string> rowsOrdered = data.CsvRows
+            .OrderBy(row => row.Split(',')[6])
+            .ThenBy(row => row.Split(',')[5])
+            .ThenBy(row => row.Split(',')[7]);
         IEnumerable<IPerson> people = data.People;
 
-        var zip = rows.Zip(people, (row, person) =>
+        var zip = rowsOrdered.Zip(people, (row, person) =>
         {
             string[] split = row.Split(",");
             Assert.AreEqual(split[1], person.FirstName);
@@ -75,7 +78,7 @@ public class SampleDataTest
             return true;
         });
         
-        Assert.AreEqual(rows.Count(), zip.Count());
+        Assert.AreEqual(rowsOrdered.Count(), zip.Count());
     }
 
     [TestMethod]
