@@ -12,6 +12,7 @@ namespace Assignment
 
         public SampleData(string filePath)
         {
+            if (!File.Exists(filePath)) throw new FileNotFoundException();
             IEnumerable<string> lines = File.ReadLines(filePath);
             _rows = lines.Skip(1).ToList();
         }
@@ -22,27 +23,31 @@ namespace Assignment
 
         // 2.
         public IEnumerable<string> GetUniqueSortedListOfStatesGivenCsvRows() 
-            => CsvRows.Select(row => row.Split(",")[6]).Distinct().OrderBy(name => name);
+            => CsvRows.Select(row => row.Split(",")[6]).Distinct().OrderBy(state => state);
 
         // 3.
         public string GetAggregateSortedListOfStatesUsingCsvRows()
             => GetUniqueSortedListOfStatesGivenCsvRows().Aggregate((all, state) => $"{all},{state}");
 
         // 4.
-        public IEnumerable<IPerson> People => CsvRows.Select((row, index) =>
-        {
-            string[] split = row.Split(',');
-
-            if (row.Split(',') is [string id, string first, string last, string email, string street, string city,
-                string state, string zip])
+        public IEnumerable<IPerson> People => CsvRows
+            .OrderBy(row => row.Split(',')[6]) //state
+            .ThenBy(row => row.Split(',')[5]) //city
+            .ThenBy(row=> row.Split(',')[7]) //zipcode
+            .Select((row, index) =>
             {
-                Address address = new (street, city, state, zip);
-                return new Person(first, last, address, email);
-            }
+                string[] split = row.Split(',');
 
-            throw new FormatException($"Invalid format at row {index}");
+                if (row.Split(',') is [string id, string first, string last, string email, string street, string city,
+                    string state, string zip])
+                {
+                    Address address = new (street, city, state, zip);
+                    return new Person(first, last, address, email);
+                }
 
-        });
+                throw new FormatException($"Invalid format at row {index}");
+
+            });
 
         // 5.
         public IEnumerable<(string FirstName, string LastName)> FilterByEmailAddress(
