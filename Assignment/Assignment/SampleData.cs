@@ -56,7 +56,7 @@ namespace Assignment
 
         // 6.
         public string GetAggregateListOfStatesGivenPeopleCollection(
-            IEnumerable<IPerson> people) => People.Select(person => person.Address.State).Distinct()
+            IEnumerable<IPerson> people) => people.Select(person => person.Address.State).Distinct()
             .OrderBy(state => state).Aggregate((all, state) => $"{all},{state}");
 
     }
