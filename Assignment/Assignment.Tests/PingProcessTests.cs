@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Assignment.Tests;
@@ -59,14 +60,19 @@ public class PingProcessTests
     {
         // Do NOT use async/await in this test.
         // Test Sut.RunTaskAsync("localhost");
+        Task<PingResult> runTask = Sut.RunTaskAsync("localhost");
+        runTask.Wait();
+        AssertValidPingOutput(runTask.Result);
     }
 
     [TestMethod]
     public void RunAsync_UsingTaskReturn_Success()
     {
         // Do NOT use async/await in this test.
-        PingResult result = default;
-        // Test Sut.RunAsync("localhost");
+        //Test Sut.RunAsync("localhost");
+        var task = Sut.RunAsync("localhost");
+        task.Wait();
+        PingResult result = task.Result;
         AssertValidPingOutput(result);
     }
 
@@ -75,7 +81,7 @@ public class PingProcessTests
     async public Task RunAsync_UsingTpl_Success()
     {
         // DO use async/await in this test.
-        PingResult result = default;
+        PingResult result = await Sut.RunAsync("localhost");
 
         // Test Sut.RunAsync("localhost");
         AssertValidPingOutput(result);
@@ -87,14 +93,27 @@ public class PingProcessTests
     [ExpectedException(typeof(AggregateException))]
     public void RunAsync_UsingTplWithCancellation_CatchAggregateExceptionWrapping()
     {
-        
+        CancellationTokenSource cts = new CancellationTokenSource();
+        cts.Cancel();
+        var task = Sut.RunAsync("localhost", cts.Token);
+        task.Wait();
     }
 
     [TestMethod]
     [ExpectedException(typeof(TaskCanceledException))]
     public void RunAsync_UsingTplWithCancellation_CatchAggregateExceptionWrappingTaskCanceledException()
     {
-        // Use exception.Flatten()
+        try
+        {
+            RunAsync_UsingTplWithCancellation_CatchAggregateExceptionWrapping();
+        }
+        catch(AggregateException ae)
+        {
+            if (ae.Flatten().InnerException is TaskCanceledException tce)
+            {
+                throw tce;
+            }
+        }
     }
 
     [TestMethod]
