@@ -46,7 +46,7 @@ public class PingProcess
             PingResult result = await RunAsync(item);
             lock (locker)
             {
-                stringBuilder = stringBuilder?.AppendLine(result.StdOutput) ?? new StringBuilder(result.StdOutput);
+                stringBuilder = stringBuilder?.Append(Environment.NewLine + result.StdOutput) ?? new StringBuilder(result.StdOutput);
             }
             return result.ExitCode;
         });
